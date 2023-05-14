@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "C:\\Users\\MrHam\\Desktop\\project_web_integration\\logs\\error\\.09894357ee9ac55afc1f04d5fa115c6326e5bcb1-audit.json",
+    "files": [
+        {
+            "date": 1684045526317,
+            "name": "C:\\Users\\MrHam\\Desktop\\project_web_integration\\logs\\error\\2023-05-14.error.log",
+            "hash": "55a0f32e8d04696559b1dff0ed7d1bcc16a083ca525ab4809813712423cb48fb"
+        }
+    ],
+    "hashType": "sha256"
+}

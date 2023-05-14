@@ -1,0 +1,27 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "fluent-ffmpeg": "^2.1.2",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
+    "morgan": "^1.10.0",
+    "mp4-box-encoding": "^1.4.1",
+    "node-onvif": "^0.1.7",
+    "node-rtsp-stream": "^0.0.9",
+    "rtsp-ffmpeg": "^0.0.16",
+    "serialport": "^11.0.0",
+    "socket.io": "^4.6.1",
+    "winston": "^3.8.2",
+    "winston-daily-rotate-file": "^4.7.1"
+  }
+}

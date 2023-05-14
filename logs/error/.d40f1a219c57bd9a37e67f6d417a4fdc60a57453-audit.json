@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "C:\\Users\\MrHam\\Desktop\\project_web_hgs\\logs\\error\\.d40f1a219c57bd9a37e67f6d417a4fdc60a57453-audit.json",
+    "files": [
+        {
+            "date": 1684074042988,
+            "name": "C:\\Users\\MrHam\\Desktop\\project_web_hgs\\logs\\error\\2023-05-14.error.log",
+            "hash": "a28aa9aa2be04c1c97cb24cadfa44165c85c78704ea8103315cb2c6e33a9c560"
+        }
+    ],
+    "hashType": "sha256"
+}

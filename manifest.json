@@ -1,0 +1,40 @@
+{
+    "name": "SECAM",
+    "short_name": "HOMECAM",
+    "description": "해킹을 방지하는 것이 주 목적인 홈캠",
+    "scope": ".",
+    "language": "Korean",
+    "start_url": "./",
+    "display": "standalone",
+    "orientation" : "portrait",
+    "background_color" : "#ffffff",
+    "theme_color": "#ffffff",
+    "icons": [
+      {
+        "src": "images/icons/android-launchericon-192-192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "images/icons/android-launchericon-512-512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],  
+    "shortcuts": [
+      {
+        "name": "SECAM",
+        "short_name": "HOMECAM",
+        "description": "해킹을 방지하는 것이 주 목적인 홈캠",
+        "url": "./",
+        "icons": [{ "src": "images/icons/android-launchericon-192-192.png", "sizes": "192x192" }]
+      },
+      {
+        "name": "SECAM",
+        "short_name": "HOMECAM",
+        "description": "해킹을 방지하는 것이 주 목적인 홈캠",
+        "url": "./",
+        "icons": [{ "src": "images/icons/android-launchericon-192-192.png.png", "sizes": "192x192" }]
+      }
+    ]
+  }

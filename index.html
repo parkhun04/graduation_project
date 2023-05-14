@@ -1,0 +1,68 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="theme-color" content="#ffffff">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rtspplay</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <canvas id="canvas" width="640" height="480"></canvas>
+    <button onclick="startRecording()">녹화 시작</button>
+    <button onclick="stopRecording()">녹화 종료</button>
+    <script>
+        var canvas = document.getElementById('canvas'),
+            ctx = canvas.getContext('2d'),
+            socket = io('');
+
+        var mediaRecorder = null;
+        var delay = 5000; // 5초
+        var timer = null;
+
+        socket.on('data', function(data) {
+            var img = new Image();
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            };
+            img.src = 'data:image/jpeg;base64,' + data;
+        });
+
+        socket.on('close', function() {
+            console.log('Socket closed');
+
+            // 이전 타이머가 있으면 제거합니다.
+            if (timer) {
+                clearTimeout(timer);
+            }
+            
+            // 타이머를 시작합니다.
+            timer = setTimeout(function() {
+                location.reload();
+            }, delay);
+        });
+
+        function startRecording() {
+            socket.emit('save', '1');
+            var stream = canvas.captureStream(25); // 25fps
+            mediaRecorder = new MediaRecorder(stream);
+
+            mediaRecorder.ondataavailable = function(e) {
+                socket.emit('video', e.data);
+            };
+
+            mediaRecorder.onstop = function() {
+                socket.emit('video-stop');
+            };
+
+            mediaRecorder.start();
+        }
+
+        function stopRecording() {
+            if (mediaRecorder != null) {
+                mediaRecorder.stop();
+            }
+        }
+    </script> 
+</body>
+</html>
