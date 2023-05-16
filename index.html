@@ -6,12 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>rtspplay</title>
     <script src="/socket.io/socket.io.js"></script>
+
+    <style>
+        .modal {
+          position: absolute;
+          top: 0;
+          left: 0;
+  
+          width: 100%;
+          height: 100%;
+  
+          display: none;
+  
+          background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal_body {
+            background-color: #fefefe;
+            margin: 8% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+        }
+      </style>
+
 </head>
 <body>
     <canvas id="canvas" width="640" height="480"></canvas>
     <button onclick="startRecording()">녹화 시작</button>
     <button onclick="stopRecording()">녹화 종료</button>
+
+    <div class="modal">
+        <div class="modal_body">침입 감지</div>
+    </div>
+
     <script>
+        const modal = document.querySelector('.modal');
+        const myAudio = document.getElementById("myAudio")
+
         var canvas = document.getElementById('canvas'),
             ctx = canvas.getContext('2d'),
             socket = io('');
@@ -20,8 +52,17 @@
         var delay = 5000; // 5초
         var timer = null;
 
+        let isFirstData = true;
+
         socket.on('data', function(data) {
             var img = new Image();
+            if (isFirstData) {
+                modal.style.display = 'block';;
+                setTimeout(function() {
+                    modal.style.display = "none"
+                }, 3000);
+                isFirstData = false;
+            }
             img.onload = function() {
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             };
