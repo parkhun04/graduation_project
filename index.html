@@ -35,6 +35,10 @@
     <canvas id="canvas" width="640" height="480"></canvas>
     <button onclick="startRecording()">녹화 시작</button>
     <button onclick="stopRecording()">녹화 종료</button>
+    <button onclick="camara_u()">▲</button>
+    <button onclick="camara_d()">▼</button>
+    <button onclick="camara_l()">◀</button>
+    <button onclick="camara_r()">▶</button>    
 
     <div class="modal">
         <div class="modal_body">침입 감지</div>
@@ -84,7 +88,7 @@
         });
 
         function startRecording() {
-            socket.emit('save', '1');
+            socket.emit('save');
             var stream = canvas.captureStream(25); // 25fps
             mediaRecorder = new MediaRecorder(stream);
 
@@ -103,6 +107,19 @@
             if (mediaRecorder != null) {
                 mediaRecorder.stop();
             }
+        }
+
+        function camara_u() {
+            socket.emit('camara_u');
+        }
+        function camara_d() {
+            socket.emit('camara_d');
+        }
+        function camara_l() {
+            socket.emit('camara_l');
+        }
+        function camara_r() {
+            socket.emit('camara_r');
         }
     </script> 
 </body>

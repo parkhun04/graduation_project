@@ -1,0 +1,16 @@
+2023-05-25 20:59:26 [SECAM] error: uncaughtException: controlServo is not defined
+ReferenceError: controlServo is not defined
+    at Namespace.<anonymous> (C:\Users\MrHam\Desktop\project_web_hgs\app.js:84:3)
+    at Namespace.emit (node:events:511:28)
+    at Namespace.emitReserved (C:\Users\MrHam\Desktop\project_web_hgs\node_modules\socket.io\dist\typed-events.js:56:22)
+    at Namespace._doConnect (C:\Users\MrHam\Desktop\project_web_hgs\node_modules\socket.io\dist\namespace.js:269:14)
+    at C:\Users\MrHam\Desktop\project_web_hgs\node_modules\socket.io\dist\namespace.js:231:22
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
+2023-05-25 20:59:34 [SECAM] error: uncaughtException: controlServo is not defined
+ReferenceError: controlServo is not defined
+    at Namespace.<anonymous> (C:\Users\MrHam\Desktop\project_web_hgs\app.js:84:3)
+    at Namespace.emit (node:events:511:28)
+    at Namespace.emitReserved (C:\Users\MrHam\Desktop\project_web_hgs\node_modules\socket.io\dist\typed-events.js:56:22)
+    at Namespace._doConnect (C:\Users\MrHam\Desktop\project_web_hgs\node_modules\socket.io\dist\namespace.js:269:14)
+    at C:\Users\MrHam\Desktop\project_web_hgs\node_modules\socket.io\dist\namespace.js:231:22
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
