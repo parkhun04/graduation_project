@@ -17,6 +17,8 @@
     "moment-timezone": "^0.5.43",
     "morgan": "^1.10.0",
     "mp4-box-encoding": "^1.4.1",
+    "noble": "^1.9.1",
+    "noble-winrt": "^0.1.1",
     "node-onvif": "^0.1.7",
     "node-rtsp-stream": "^0.0.9",
     "rtsp-ffmpeg": "^0.0.16",
@@ -25,5 +27,8 @@
     "winston": "^3.8.2",
     "winston-daily-rotate-file": "^4.7.1",
     "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "noble-uwp": "^0.6.2"
   }
 }

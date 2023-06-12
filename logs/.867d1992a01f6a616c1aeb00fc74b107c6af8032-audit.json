@@ -1,0 +1,25 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "D:\\SECAM\\logs\\.867d1992a01f6a616c1aeb00fc74b107c6af8032-audit.json",
+    "files": [
+        {
+            "date": 1685792408519,
+            "name": "D:\\SECAM\\logs\\2023-06-03.exception.log",
+            "hash": "dc2bfa06a9b1b8e5484c33bef71034e13d008c63c98945ce0517fe997feb1d10"
+        },
+        {
+            "date": 1685804546164,
+            "name": "D:\\SECAM\\logs\\2023-06-04.exception.log",
+            "hash": "7a061925d0de3b89ee96f5e8e0aecfc42c9ea78786015ba92df45c41dc6ccd33"
+        },
+        {
+            "date": 1686584938686,
+            "name": "D:\\SECAM\\logs\\2023-06-13.exception.log",
+            "hash": "d1af05365662fcd634d419a69ea59834df5b3b1a98e209f189d35bc49085f063"
+        }
+    ],
+    "hashType": "sha256"
+}
