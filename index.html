@@ -1,126 +1,145 @@
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="theme-color" content="#ffffff">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>rtspplay</title>
-    <script src="/socket.io/socket.io.js"></script>
-
-    <style>
-        .modal {
-          position: absolute;
-          top: 0;
-          left: 0;
-  
-          width: 100%;
-          height: 100%;
-  
-          display: none;
-  
-          background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal_body {
-            background-color: #fefefe;
-            margin: 8% auto; 
-            padding: 20px;
-            border: 1px solid #888;
-            width: 30%;
-        }
-      </style>
-
+  <meta charset="UTF-8" />
+  <meta name="theme-color" content="#ffffff">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>rtspplay</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <style>
+    .modal {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .modal_body {
+      background-color: #fefefe;
+      margin: 8% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 30%;
+    }
+  </style>
 </head>
 <body>
-    <canvas id="canvas" width="640" height="480"></canvas>
-    <button onclick="startRecording()">녹화 시작</button>
-    <button onclick="stopRecording()">녹화 종료</button>
-    <button onclick="camara_u()">▲</button>
-    <button onclick="camara_d()">▼</button>
-    <button onclick="camara_l()">◀</button>
-    <button onclick="camara_r()">▶</button>    
+  <canvas id="canvas" width="640" height="480"></canvas>
+  <button onclick="startRecording()">녹화 시작</button>
+  <button onclick="stopRecording()">녹화 종료</button>
+  <button onclick="camara_u()">▲</button>
+  <button onclick="camara_d()">▼</button>
+  <button onclick="camara_l()">◀</button>
+  <button onclick="camara_r()">▶</button>    
+  <div class="modal">
+    <div class="modal_body">침입 감지</div>
+  </div>
+  <script>
+    const modal = document.querySelector('.modal');
+    const myAudio = document.getElementById("myAudio")
+    var canvas = document.getElementById('canvas'),
+        ctx = canvas.getContext('2d'),
+        socket = io('');
 
-    <div class="modal">
-        <div class="modal_body">침입 감지</div>
-    </div>
+    // Web Notification 알람 허용 팝업창 띄우기    
+    Notification.requestPermission().then(function(result) {
+        console.log(result);
+    });
 
-    <script>
-        const modal = document.querySelector('.modal');
-        const myAudio = document.getElementById("myAudio")
-
-        var canvas = document.getElementById('canvas'),
-            ctx = canvas.getContext('2d'),
-            socket = io('');
-
-        var mediaRecorder = null;
-        var delay = 5000; // 5초
-        var timer = null;
-
-        let isFirstData = true;
-
-        socket.on('data', function(data) {
-            var img = new Image();
-            if (isFirstData) {
-                modal.style.display = 'block';;
-                setTimeout(function() {
-                    modal.style.display = "none"
-                }, 3000);
-                isFirstData = false;
-            }
-            img.onload = function() {
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            };
-            img.src = 'data:image/jpeg;base64,' + data;
+    function showPushNotification() {
+      let date = new Date().toLocaleString();
+      let notification;
+      let notificationPermission = Notification.permission;
+      if (notificationPermission === "granted") {
+        // 이미 허용한 경우 푸시 알림 표시
+        notification = new Notification(`영상이 촬영되고 있습니다.`, {
+          body: `영상촬영 시간: ${date}`,
+          icon: '/images/inons/android-launchericon-48-48.png',
         });
-
-        socket.on('close', function() {
-            console.log('Socket closed');
-
-            // 이전 타이머가 있으면 제거합니다.
-            if (timer) {
-                clearTimeout(timer);
-            }
-            
-            // 타이머를 시작합니다.
-            timer = setTimeout(function() {
-                location.reload();
-            }, delay);
+      } else if (notificationPermission !== 'denied') {
+        // 허용하지 않은 경우 재허용 창 띄우기
+        Notification.requestPermission(function (permission) {
+          if (permission === "granted") {
+            // 허용한 경우 푸시 알림 표시
+            notification = new Notification(`영상이 촬영되고 있습니다.`, {
+              body: `영상촬영 시간: ${date}`,
+              icon: '/images/inons/android-launchericon-48-48.png',
+            });
+          } else {
+            alert("알람 허용이 거부되었습니다.");
+          }
         });
+      }
+    }
 
-        function startRecording() {
-            socket.emit('save');
-            var stream = canvas.captureStream(25); // 25fps
-            mediaRecorder = new MediaRecorder(stream);
+    var mediaRecorder = null;
+    var delay = 5000; // 5초
+    var timer = null;
+    let isFirstData = true;
+    socket.on('data', function(data) {
+      var img = new Image();
+      if (isFirstData) {
+        modal.style.display = 'block';
+        setTimeout(function() {
+          modal.style.display = "none";
+        }, 3000);
+        isFirstData = false;
 
-            mediaRecorder.ondataavailable = function(e) {
-                socket.emit('video', e.data);
-            };
+        showPushNotification(); // 수정된 부분: 푸시 알림 표시
+      }
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      };
+      img.src = '/images/inons/android-launchericon-48-48.png' + data;
+    });
 
-            mediaRecorder.onstop = function() {
-                socket.emit('video-stop');
-            };
+    socket.on('close', function() {
+      console.log('Socket closed');
+      if (timer) {
+        clearTimeout(timer);
+      }
+      
+      timer = setTimeout(function() {
+        location.reload();
+      }, delay);
+    });
 
-            mediaRecorder.start();
-        }
+    function startRecording() {
+      socket.emit('save');
+      var stream = canvas.captureStream(25); // 25fps
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = function(e) {
+        socket.emit('video', e.data);
+      };
+      mediaRecorder.onstop = function() {
+        socket.emit('video-stop');
+      };
+      mediaRecorder.start();
+    }
 
-        function stopRecording() {
-            if (mediaRecorder != null) {
-                mediaRecorder.stop();
-            }
-        }
+    function stopRecording() {
+      if (mediaRecorder != null) {
+        mediaRecorder.stop();
+      }
+    }
 
-        function camara_u() {
-            socket.emit('camara_u');
-        }
-        function camara_d() {
-            socket.emit('camara_d');
-        }
-        function camara_l() {
-            socket.emit('camara_l');
-        }
-        function camara_r() {
-            socket.emit('camara_r');
-        }
-    </script> 
+    function camara_u() {
+      socket.emit('camara_u');
+    }
+
+    function camara_d() {
+      socket.emit('camara_d');
+    }
+
+    function camara_l() {
+      socket.emit('camara_l');
+    }
+
+    function camara_r() {
+      socket.emit('camara_r');
+    }
+  </script> 
 </body>
 </html>
